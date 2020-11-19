@@ -9,13 +9,11 @@ let url = urlApi();
 function Details(props) {
   const id = props.match.params.id;
   const [movie, setMovie] = useState({});
-  const [similar, setSimilar] = useState([]);
 
   useEffect(() => {
     const fetchSearch = async () => {
       try {
         getMovieDetail(id);
-        getSimilareMovie(id);
       } catch (error) {
         console.log(error);
       }
@@ -31,14 +29,6 @@ function Details(props) {
       .then((res) => {
         setMovie(res);
         genres = res.genres;
-        console.log(res);
-      })
-      .catch((error) => console.log(error));
-  }
-  function getSimilareMovie(movieId) {
-    getMovie(movieId, "similar")
-      .then((res) => {
-        setSimilar(res.results);
         console.log(res);
       })
       .catch((error) => console.log(error));

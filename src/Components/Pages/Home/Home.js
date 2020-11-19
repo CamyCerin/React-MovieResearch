@@ -32,7 +32,7 @@ function Home({ history }) {
     return () => {
       // Do some cleanup
     };
-  }, [categories]);
+  });
 
   function handleLink(e, link) {
     e.preventDefault();
