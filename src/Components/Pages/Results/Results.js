@@ -9,6 +9,7 @@ let page = 1;
 let url = urlApi();
 
 function Results(props) {
+  console.log(props);
   const { history } = props;
   const values = queryString.parse(props.location.search);
   const [result, setResult] = useState([]);
@@ -16,6 +17,26 @@ function Results(props) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    function getSearch(param) {
+      let get;
+      if (Object.hasOwnProperty.bind(values)("q")) {
+        get = search(values.q, param);
+        setMessage(`résultat de la recherche "${values.q}"`);
+      } else if (Object.hasOwnProperty.bind(values)("categories")) {
+        get = movies(values.categories, param);
+        setMessage(`résultat de la catégorie "${values.categories}"`);
+      } else {
+        history.push("/");
+        return;
+      }
+
+      get
+        .then((res) => {
+          setResult(res.results);
+          setNbPage(res.total_pages);
+        })
+        .catch((error) => console.log(error));
+    }
     const fetchSearch = async () => {
       try {
         getSearch(page);
@@ -28,28 +49,7 @@ function Results(props) {
     return () => {
       // Do some cleanup
     };
-  }, [values, page]);
-
-  function getSearch(param) {
-    let get;
-    if (Object.hasOwnProperty.bind(values)("q")) {
-      get = search(values.q, param);
-      setMessage(`résultat de la recherche "${values.q}"`);
-    } else if (Object.hasOwnProperty.bind(values)("categories")) {
-      get = movies(values.categories, param);
-      setMessage(`résultat de la catégorie "${values.categories}"`);
-    } else {
-      history.push("/");
-      return;
-    }
-
-    get
-      .then((res) => {
-        setResult(res.results);
-        setNbPage(res.total_pages);
-      })
-      .catch((error) => console.log(error));
-  }
+  }, [page, history]);
 
   function nextPage(number) {
     page = number;
@@ -82,7 +82,7 @@ function Results(props) {
     }
     return tab;
   }
-
+  console.log(nbPage, page);
   return (
     <div className="App">
       <h1 className="mb-4">{message}</h1>

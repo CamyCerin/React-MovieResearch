@@ -18,6 +18,25 @@ function Home({ history }) {
   const [upcoming, setUpcoming] = useState([]);
 
   useEffect(() => {
+    function getSearch(param) {
+      console.log(param.type);
+      movies(param.type, 1)
+        .then((res) => {
+          shuffle(res.results);
+          let newValues = [];
+          for (let j = 0; j < limit; j++) {
+            newValues.push(res.results[j]);
+          }
+          if (param.type === "popular") {
+            setPopular(newValues);
+          } else if (param.type === "top_rated") {
+            setTop(newValues);
+          } else if (param.type === "upcoming") {
+            setUpcoming(newValues);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
     const fetchSearch = async () => {
       try {
         for (var i = 0; i < categories.length; i++) {
@@ -32,31 +51,11 @@ function Home({ history }) {
     return () => {
       // Do some cleanup
     };
-  });
+  }, []);
 
   function handleLink(e, link) {
     e.preventDefault();
     history.push(link);
-  }
-
-  function getSearch(param) {
-    console.log(param.type);
-    movies(param.type, 1)
-      .then((res) => {
-        shuffle(res.results);
-        let newValues = [];
-        for (let j = 0; j < limit; j++) {
-          newValues.push(res.results[j]);
-        }
-        if (param.type === "popular") {
-          setPopular(newValues);
-        } else if (param.type === "top_rated") {
-          setTop(newValues);
-        } else if (param.type === "upcoming") {
-          setUpcoming(newValues);
-        }
-      })
-      .catch((error) => console.log(error));
   }
 
   function giveState(type) {
