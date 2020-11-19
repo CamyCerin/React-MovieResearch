@@ -4,8 +4,7 @@ $yellow: #f8c100;
 $black: #191919;
 $blue: #0d3cc0;
 $grey: #1e1e1e;
-body,
-html {
+body {
   background-color: $black;
   overflow-x: hidden;
 }
@@ -56,6 +55,7 @@ h3 {
   margin-top: 3px;
   margin-bottom: 13px;
   color: #e0e0e0;
+  font-style: italic;
 }
 .eyeGroup,
 .bookGroup,
@@ -66,7 +66,7 @@ h3 {
   align-items: center;
 }
 .groupTitle {
-  font-size: 0.8em !important;
+  font-size: 0.9em !important;
   margin-top: 13px;
 }
 // MAX 992px (mobile/tablette)
