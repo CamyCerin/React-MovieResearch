@@ -10,12 +10,14 @@ let url = urlApi();
 
 function Results(props) {
   console.log(props);
-  const { history } = props;
+  const { history, setcurrentPage } = props;
   const values = queryString.parse(props.location.search);
   const [result, setResult] = useState([]);
   const [nbPage, setNbPage] = useState(1);
   const [message, setMessage] = useState("");
-
+  useEffect(() => {
+    setcurrentPage("result");
+  }, []);
   useEffect(() => {
     function getSearch(param) {
       let get;
