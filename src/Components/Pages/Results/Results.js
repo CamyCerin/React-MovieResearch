@@ -101,7 +101,7 @@ function Results(props) {
             <img
               className="card-img-top"
               src={`${url}${item.poster_path}`}
-              alt="Card image cap"
+              alt={item.title}
             />
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
