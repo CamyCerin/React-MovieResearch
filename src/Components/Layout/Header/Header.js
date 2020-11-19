@@ -1,29 +1,32 @@
-import { NavLink as RouterNavLink, Redirect } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-
-function Header() {
+function Header({ history }) {
     
     function getResult(e) {
         e.preventDefault();
         var value = e.target.querySelector('input').value;
         
-        if (value.trim() == '') {
+        if (value.trim() === '') {
             return
         }
-
-        // let location = {
-        //     pathname
-        // }
-
-        // <Redirect to={location}/>
+        e.target.querySelector('input').value = ""
+        history.push('/results?q='+value.trim());
     }
     
+    function handleLink(e, link){
+        e.preventDefault()
+        history.push(link)
+    }
+
     return (
       <div className="App">
         
         <ul>
             <li>
-                <RouterNavLink to='/'>Home</RouterNavLink>
+                <a href='' onClick={(e) => handleLink(e,'/')}>Home</a> | 
+                <a href='' onClick={(e) => handleLink(e,'/results?categories=popular')}>Populaires</a> |
+                <a href='' onClick={(e) => handleLink(e,'/results?categories=top_rated')}>Les mieux notés</a>|
+                <a href='' onClick={(e) => handleLink(e,'/results?categories=upcoming')}>A venir</a>
             </li>
             <li>
                 <form onSubmit={getResult}>
@@ -39,4 +42,4 @@ function Header() {
     );
   }
   
-export default Header;
+export default withRouter(Header);
