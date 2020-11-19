@@ -6,6 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "moment/locale/fr";
 import "./Components/Pages/Details/Details.scss";
 import "./Reset/Reset.scss";
+import "./Components/Layout/Header/Header.scss";
+import "./Components/Layout/Footer/Footer.scss";
 ReactDOM.render(
   <React.StrictMode>
     <App />
