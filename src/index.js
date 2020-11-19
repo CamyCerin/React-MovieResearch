@@ -4,7 +4,8 @@ import App from "./Components/App/App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "moment/locale/fr";
-
+import "./Components/Pages/Details/Details.scss";
+import "./Reset/Reset.scss";
 ReactDOM.render(
   <React.StrictMode>
     <App />

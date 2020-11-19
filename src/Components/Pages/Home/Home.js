@@ -12,12 +12,14 @@ const categories = [
 let url = urlApi();
 const limit = 6;
 
-function Home({ history }) {
+function Home(props) {
+  const { history, setcurrentPage } = props;
   const [popular, setPopular] = useState([]);
   const [top, setTop] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
 
   useEffect(() => {
+    setcurrentPage("home");
     function getSearch(param) {
       console.log(param.type);
       movies(param.type, 1)

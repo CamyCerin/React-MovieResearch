@@ -1,15 +1,23 @@
 import { getMovie, urlApi } from "../../../services";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
+import bookico from "../../../assets/bookmark.svg";
+import eyeico from "../../../assets/eye-off.svg";
+import linkico from "../../../assets/link.svg";
+
 Moment.globalLocale = "fr";
 let genres = [];
 
 let url = urlApi();
 function Details(props) {
+  console.log(props);
+  const { setcurrentPage } = props;
   const id = props.match.params.id;
   const [movie, setMovie] = useState({});
-
+  useEffect(() => {
+    setcurrentPage("details");
+  }, []);
   useEffect(() => {
     const fetchSearch = async () => {
       try {
@@ -47,23 +55,50 @@ function Details(props) {
 
   return (
     <div className="App">
-      <div className="row">
-        <div className="col-7">
-          <div className="container">
-            <h2>{movie.title}</h2>
+      <div className="moviescontainer d-flex">
+        {/* img poster */}
+        <div className="hero-poster">
+          <img
+            className="movieposter"
+            src={`${url}${movie.poster_path}`}
+            alt={movie.title}
+          />
+          <div className="blackShadow"></div>
+        </div>
+        {/* le reste */}
+        <div className="container">
+          <div className="detailsContainer">
+            <h2>
+              {movie.title}
+              <Link to={{ pathname: movie.homepage }} target="_blank">
+                <img className="icolink" src={linkico} alt="link icon" />
+              </Link>
+            </h2>
+            <div className="movietagline">{movie.tagline}</div>
             <p>{listGenres()}</p>
+            <div className="iconsrow">
+              <div className="bookGroup">
+                <img
+                  className="icobookmark"
+                  src={bookico}
+                  alt="bookmark icon"
+                />
+                <p className="groupTitle">Ajouter à ma liste</p>
+              </div>
+              <div className="eyeGroup">
+                <img className="icoeye" src={eyeico} alt="eye icon" />
+                <p className="groupTitle">Audiodescription</p>
+              </div>
+              <div className="noteGroup">
+                <div class="numberCircle">{movie.vote_average}</div>
+                <p className="groupTitle">Note des utilisateurs</p>
+              </div>
+            </div>
             <p className="mt-3">{movie.overview}</p>
             <h3>
               <Moment format="DD MMMM YYYY">{movie.release_date}</Moment>
             </h3>
           </div>
-        </div>
-        <div className="col-5">
-          <img
-            className="col-12"
-            src={`${url}${movie.poster_path}`}
-            alt={movie.title}
-          />
         </div>
       </div>
     </div>

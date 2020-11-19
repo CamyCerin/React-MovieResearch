@@ -1,7 +1,7 @@
 import { withRouter, Link } from "react-router-dom";
-
-function Header({ history }) {
-  function getResult(e) {
+function Header(props) {
+  const { history, isDetailsPage } = props;
+  function getResults(e) {
     e.preventDefault();
     var value = e.target.querySelector("input").value;
 
@@ -49,19 +49,21 @@ function Header({ history }) {
             A venir
           </Link>
         </li>
-        <li>
-          <form onSubmit={getResult}>
-            <div className="row">
-              <div className="form-group col-8">
-                <input
-                  className="form-control"
-                  type="search"
-                  placeholder="Rechercher"
-                />
+        {!isDetailsPage && (
+          <li>
+            <form onSubmit={getResults}>
+              <div className="row">
+                <div className="form-group col-8">
+                  <input
+                    className="form-control"
+                    type="search"
+                    placeholder="Rechercher"
+                  />
+                </div>
               </div>
-            </div>
-          </form>
-        </li>
+            </form>
+          </li>
+        )}
       </ul>
     </div>
   );
