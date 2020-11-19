@@ -1,66 +1,102 @@
-import { search } from '../../../API';
+import { movies, urlApi, shuffle } from '../../../services';
 import { useEffect, useState } from 'react';
+import { withRouter } from "react-router-dom";
+import Moment from 'react-moment';
+Moment.globalLocale = 'fr';
 
-let page = 1;
+const categories = [
+                    {"type":"popular","name":"Populaire"},
+                    {"type":"top_rated","name":"Les mieux notés"},
+                    {"type":"upcoming","name":"A venir"}
+                ]
+let url = urlApi()
+const limit = 6;
 
-function Home() {
+function Home({ history }) {
 
-    const [result, setResult] = useState([])
-    const [nbPage, setNbPage] = useState(1)
+    const [popular, setPopular] = useState([])
+    const [top, setTop] = useState([])
+    const [upcoming, setUpcoming] = useState([])
 
     useEffect(() => {
-        getSearch(page);
-    }, [])
+        
+        const fetchSearch = async () => {
+            try {
+                for(var i = 0; i<categories.length; i++){
+                    getSearch(categories[i]);
+                }
+            } catch (error) {
+                // You can create an error state and set error here
+                console.log(error);
+            }
+        }
+        fetchSearch();
+        return () => {
+         // Do some cleanup   
+        }
+    },[categories])
 
-    function getSearch () {
-        console.log(page)
-        search('breaking bad', page)
-        .then(res=> {
-            setResult(res.results);
-            setNbPage(res.total_pages);
-            console.log(res)
+    function handleLink(e, link){
+        e.preventDefault()
+        history.push(link)
+    }
+
+    function getSearch (param) {
+        console.log(param.type);
+        movies(param.type, 1).then(res=> {
+            shuffle(res.results)
+            let newValues = [];
+            for(let j=0; j<limit; j++){
+                newValues.push(res.results[j])
+            }
+            if(param.type === "popular"){
+                setPopular(newValues);
+            } else if(param.type === "top_rated"){
+                setTop(newValues);
+            } else if(param.type === "upcoming"){
+                setUpcoming(newValues);
+            }
         })
         .catch(error => console.log(error))
     }
 
-
-    function nextPage (number) {
-        console.log(number)
-        page = number;
-        getSearch(page)
-    }
-
-    function getLink (number) {
-        return <button key={number} className="btn btn-primary ml-2" disabled={number == page ? 'disabled' : null} onClick={() => {nextPage(number)}}>{number}</button>
-    }
-
-    function getNumberPage () {
-        if (nbPage == 1) {
-            return '';
+    function giveState(type){
+        if(type === "popular"){
+            return popular;
+        } else if(type === "top_rated"){
+            return top;
+        } else if(type === "upcoming"){
+            return upcoming;
+        } else {
+            return []
         }
-        
-        var tab = [];
-
-        for (var i = 1; i <= nbPage; i++) {
-            tab.push(getLink(i));
-            
-        }
-        return tab;
-
     }
-
     return (
       <div className="App">
-        <h1>Home</h1>
-        <ul>
-            {result.map(item => 
-                <li key={item.id}>{item.title}</li>
-            )}
-        </ul>
-        <br/>
-        {getNumberPage()}
+          {
+            categories.map((cat, index)=>
+                <section key={index}>
+                    <h3><a href='' onClick={(e) => handleLink(e,`/results?categories=${cat.type}`)}>{cat.name}</a></h3>
+                    <div className="row mb-3">
+                    {
+                        giveState(cat.type).map(item => 
+                        <a href="" onClick={(e) => {e.preventDefault();history.push(`/details/${item.id}`)}} className="ml-4 mb-3 card col-3" key={item.id}>
+                            <img className="card-img-top" src={`${url}${item.poster_path}`} alt="Card image cap" />
+                            <div className="card-body">
+                                <h5 className="card-title">{item.title}</h5>
+                                <p className="card-text">
+                                    <Moment format="DD MMMM YYYY">
+                                        {item.release_date}
+                                    </Moment></p>
+                            </div>
+                        </a>
+                    )}
+                    </div>
+                </section>
+            )
+          }
       </div>
     );
   }
   
-export default Home;
+export default withRouter(Home);
