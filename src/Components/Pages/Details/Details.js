@@ -2,12 +2,12 @@ import { getMovie, urlApi } from "../../../services";
 import { withRouter, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
-import bookico from "../../../assets/bookmark.png";
-import eyeico from "../../../assets/eye-off.png";
-import linkico from "../../../assets/link.png";
-import emptyico from "../../../assets/star-vide.png";
-import filledico from "../../../assets/star-pleine.png";
-import halfico from "../../../assets/star-moitie.png";
+import bookico from "../../../assets/bookmark.svg";
+import eyeico from "../../../assets/eye-off.svg";
+import linkico from "../../../assets/link.svg";
+import emptyico from "../../../assets/star-empty.svg";
+import filledico from "../../../assets/star-filled.svg";
+import halfico from "../../../assets/star-half.svg";
 
 Moment.globalLocale = "fr";
 let genres = [];
@@ -126,10 +126,13 @@ function Details(props) {
                     <div className="synops">
                       {movie.overview}
                     </div>
+                    <p className="date-sortie">
+                      <em class="far fa-calendar-alt"></em>      
+                      <Moment format="DD MMMM YYYY">{movie.release_date}</Moment>
+                    </p>
                 </div>
             </div>
         </div>
-        <div className="date-sortie"><Moment format="YYYY">{movie.release_date}</Moment></div>
     </div>
 
   );

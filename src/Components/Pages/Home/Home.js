@@ -2,9 +2,9 @@ import { movies, urlApi, shuffle } from "../../../services";
 import { useEffect, useState } from "react";
 import { withRouter, Link } from "react-router-dom";
 
-import startPleine from '../../../assets/star-pleine.png'
-import startMoitie from '../../../assets/star-moitie.png'
-//import startVide from '../../../assets/star-vide.png'
+import startPleine from '../../../assets/star-filled.svg'
+import startMoitie from '../../../assets/star-half.svg'
+//import startVide from '../../../assets/star-empty.svg'
 import bg from '../../../assets/bg.png'
 
 import Moment from "react-moment";

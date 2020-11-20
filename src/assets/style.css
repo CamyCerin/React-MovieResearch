@@ -90,6 +90,7 @@ html{  margin: 0;
 .header #nav-bar.result .mobile {
     font-size: 25px;
     margin-left: 20px;
+    float: right;
 }
 
 .notFound {
@@ -275,9 +276,12 @@ main.home {
 }
 
 .date-sortie {
-    text-align: center;
     font-weight: bold;
-    font-size: 5em;
+}
+
+.date-sortie em {
+  margin-right:12px;
+  margin-top: 20px;
 }
 
 .tittle {
@@ -811,8 +815,7 @@ img.img{
         padding-bottom: 50px;
     }
     .detail-movie .date-sortie {
-        position: relative;
-        bottom: 20px;
+      margin-top: 15px;
     }
 
     .cards__content {
