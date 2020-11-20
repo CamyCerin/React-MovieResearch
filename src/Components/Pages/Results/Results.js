@@ -4,6 +4,7 @@ import { search, urlApi, movies } from "../../../services";
 import { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
+import $ from 'jquery';
 import Moment from "react-moment";
 Moment.globalLocale = "fr";
 
@@ -74,6 +75,7 @@ function Results(props) {
         num =  parseInt(tab[i]);
       }
     }
+    $("html, body").animate({scrollTop: 0},"slow");
     page = num;
   }
 
