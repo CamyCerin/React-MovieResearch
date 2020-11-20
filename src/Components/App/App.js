@@ -13,7 +13,6 @@ const Results = lazy(() => import("../Pages/Results/Results"));
 function App() {
   const [currentPage, setcurrentPage] = useState("home");
   const [isDetailsPage, setDetailsPage] = useState(false);
-  console.log(currentPage, isDetailsPage);
   useEffect(() => {
     if (currentPage === "details") {
       setDetailsPage(true);

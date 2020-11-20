@@ -27,7 +27,6 @@ function Home(props) {
   useEffect(() => {
     setcurrentPage("home");
     function getSearch(param) {
-      console.log(param.type);
       movies(param.type, 1)
         .then((res) => {
           shuffle(res.results);

@@ -54,7 +54,6 @@ function Details(props) {
   function vote(param) {
     let modulo = param % 2;
     let stars = Math.round(param / 2);
-    console.log(modulo, stars);
     let starsTab = ["vide", "vide", "vide", "vide", "vide"];
     for (var i = 0; i < stars; i++) {
       starsTab[i] = "plein";

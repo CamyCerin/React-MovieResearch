@@ -9,7 +9,6 @@ let page = 1;
 let url = urlApi();
 
 function Results(props) {
-  console.log(props);
   const { history, setcurrentPage } = props;
   const values = queryString.parse(props.location.search);
   const [result, setResult] = useState([]);
@@ -86,7 +85,6 @@ function Results(props) {
     }
     return tab;
   }
-  console.log(nbPage, page);
   return (
     <div className="app-result">
       <div className="container-title">

@@ -30,7 +30,7 @@ function Header(props) {
               to={"/results?categories=popular"}
               onClick={(e) => handleLink(e, "/results?categories=popular")}
             >
-                <em class="fas fa-arrow-left"></em>
+                <em className="fas fa-arrow-left"></em>
             </Link>
 
           <Link
