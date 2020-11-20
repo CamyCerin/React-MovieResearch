@@ -86,7 +86,7 @@ function Home(props) {
                     <div className="cards__content">
                         <div className="movie-card__header">
                             <h1 className="tittle">Peninsula</h1>
-                            <h4 className="movie-card__info">(23 Décembre 2020) Populaires <span class="bar"></span> Fantaisie - Aventure</h4>
+                            <h4 className="movie-card__info">(23 Décembre 2020) Populaires <span className="bar"></span> Fantaisie - Aventure</h4>
                         </div>
                         <p className="movie-card__desc">
                             La péninsule se déroule quatre ans après Train to Busan, alors que les personnages 

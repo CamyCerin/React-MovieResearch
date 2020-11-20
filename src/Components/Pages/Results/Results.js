@@ -2,18 +2,30 @@ import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import { search, urlApi, movies } from "../../../services";
 import { useEffect, useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 import Moment from "react-moment";
 Moment.globalLocale = "fr";
 
 let page = 1;
 let url = urlApi();
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      marginTop: theme.spacing(2)
+    },
+  },
+}));
+
 function Results(props) {
+
   const { history, setcurrentPage } = props;
   const values = queryString.parse(props.location.search);
   const [result, setResult] = useState([]);
   const [nbPage, setNbPage] = useState(1);
   const [message, setMessage] = useState("");
+  const classes = useStyles();
   
   useEffect(() => {
     setcurrentPage("result");
@@ -55,36 +67,16 @@ function Results(props) {
   }, [page, values, history]);
 
   function nextPage(number) {
-    page = number;
-  }
-
-  function getLink(number) {
-    return (
-      <button
-        key={number}
-        className="btn btn-primary ml-2"
-        disabled={number === page ? "disabled" : null}
-        onClick={() => {
-          nextPage(number);
-        }}
-      >
-        {number}
-      </button>
-    );
-  }
-
-  function getNumberPage() {
-    if (nbPage === 1) {
-      return "";
+    var tab = number.target.ariaLabel.split(" ")
+    let num;
+    for(var i=0; i<tab.length; i++){
+      if(!isNaN(tab[i])){
+        num =  parseInt(tab[i]);
+      }
     }
-
-    var tab = [];
-
-    for (var i = 1; i <= nbPage; i++) {
-      tab.push(getLink(i));
-    }
-    return tab;
+    page = num;
   }
+
   return (
     <div className="app-result">
       <div className="container-title">
@@ -120,7 +112,20 @@ function Results(props) {
             ))}
           </main>
       </div>
-      {getNumberPage()}
+      
+      <div className={classes.root+" pag"}>
+        <Pagination  
+          onClick={(e) => {
+            nextPage(e);
+          }} 
+          count={nbPage} 
+          shape="rounded" 
+          color="primary" 
+          showFirstButton 
+          showLastButton />
+      </div>
+
+      {/*getNumberPage()*/}
     </div>
   );
 }
