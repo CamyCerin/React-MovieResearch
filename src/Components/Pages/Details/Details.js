@@ -2,12 +2,12 @@ import { getMovie, urlApi } from "../../../services";
 import { withRouter, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
-import bookico from "../../../assets/bookmark.svg";
-import eyeico from "../../../assets/eye-off.svg";
-import linkico from "../../../assets/link.svg";
-import emptyico from "../../../assets/star-empty.svg";
-import filledico from "../../../assets/star-filled.svg";
-import halfico from "../../../assets/star-half.svg";
+import bookico from "../../../assets/bookmark.png";
+import eyeico from "../../../assets/eye-off.png";
+import linkico from "../../../assets/link.png";
+import emptyico from "../../../assets/star-vide.png";
+import filledico from "../../../assets/star-pleine.png";
+import halfico from "../../../assets/star-moitie.png";
 
 Moment.globalLocale = "fr";
 let genres = [];
@@ -81,63 +81,57 @@ function Details(props) {
   }
 
   return (
-    <div className="App">
-      <div className="moviescontainer d-flex">
-        {/* img poster */}
-        <div className="hero-poster">
-          <img
-            className="movieposter"
-            src={`${url}${movie.poster_path}`}
-            alt={movie.title}
-          />
-          <div className="blackShadow"></div>
-        </div>
-        {/* le reste */}
-        <div className="container">
-          <div className="detailsContainer">
-            <h2>
-              {movie.title}
-              <Link to={{ pathname: movie.homepage }} target="_blank">
-                <img className="icolink" src={linkico} alt="link icon" />
-              </Link>
-            </h2>
-            <div className="movietagline">{movie.tagline}</div>
-            <p>{listGenres()}</p>
-            <div className="iconsrow">
-              <div className="bookGroup">
-                <img
-                  className="icobookmark"
-                  src={bookico}
-                  alt="bookmark icon"
-                />
-                <p className="groupTitle">Ajouter à ma liste</p>
-              </div>
-              <div className="eyeGroup">
-                <img className="icoeye" src={eyeico} alt="eye icon" />
-                <p className="groupTitle">Audiodescription</p>
-              </div>
-              <div className="noteGroup">
-                <div class="numberCircle">
-                  {iconsVote.map((el, index) => (
-                    <img
-                      key={index}
-                      className=""
-                      src={el}
-                      alt={"etoile" + index}
-                    />
-                  ))}
-                </div>
-                <p className="groupTitle">Note des utilisateurs</p>
-              </div>
+    <div className="detail-movie">
+        <div className="detail" >
+            <div className="img">
+                <img src={`${url}${movie.poster_path}`} className="img" alt={movie.title} />
+                <div className="blur"></div>
             </div>
-            <p className="mt-3">{movie.overview}</p>
-            <h3>
-              <Moment format="DD MMMM YYYY">{movie.release_date}</Moment>
-            </h3>
-          </div>
+            <div className="text">
+                <div className="text-content">
+                    <h2 className="tittle">
+                      {movie.title} 
+                      <Link to={{ pathname: movie.homepage }} target="_blank">
+                        <img src={linkico} alt="link icon" className="mobile"/>
+                      </Link>
+                    </h2>
+                    <h4 className="small-tittle">{movie.tagline}</h4>
+                    <h4 className="small-tittle-2">{listGenres()}</h4>
+    
+                    <div className="tag">
+                        <div className="tag-item">
+                            <img src={bookico} alt="bookmark" />
+                            <p className="desktop">Ajouter à ma liste</p>
+                        </div>
+                        <div className="tag-item">
+                            <img src={eyeico} alt="eye-off" />
+                            <p className="desktop">Audiodescription</p>
+                        </div>
+                        <div className="tag-item desktop">
+                          <Link to={{ pathname: movie.homepage }} target="_blank"><img src={linkico} alt="link" /></Link>
+                          <p className="desktop">Fiche du film</p>
+                        </div>
+                        <div className="tag-item prog">
+                            <div className="star-groups">
+                              {iconsVote.map((el, index) => (
+                                <img 
+                                  key={index}
+                                  src={el}
+                                  alt={"etoile" + index} />
+                              ))}
+                            </div>
+                            <p className="desktop">Note des utilisateurs</p>
+                        </div>
+                    </div>
+                    <div className="synops">
+                      {movie.overview}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <div className="date-sortie"><Moment format="YYYY">{movie.release_date}</Moment></div>
     </div>
+
   );
 }
 export default withRouter(Details);

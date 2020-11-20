@@ -1,4 +1,4 @@
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import { search, urlApi, movies } from "../../../services";
 import { useEffect, useState } from "react";
@@ -15,9 +15,11 @@ function Results(props) {
   const [result, setResult] = useState([]);
   const [nbPage, setNbPage] = useState(1);
   const [message, setMessage] = useState("");
+  
   useEffect(() => {
     setcurrentPage("result");
   }, []);
+
   useEffect(() => {
     function getSearch(param) {
       let get;
@@ -51,7 +53,7 @@ function Results(props) {
     return () => {
       // Do some cleanup
     };
-  }, [page, history]);
+  }, [page, values, history]);
 
   function nextPage(number) {
     page = number;
@@ -86,33 +88,39 @@ function Results(props) {
   }
   console.log(nbPage, page);
   return (
-    <div className="App">
-      <h1 className="mb-4">{message}</h1>
-      <div className="row mb-3">
-        {result.map((item) => (
-          <Link
-            to={`/details/${item.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              history.push(`/details/${item.id}`);
-            }}
-            Prevent
-            className="ml-4 mb-3 card col-3"
-            key={item.id}
-          >
-            <img
-              className="card-img-top"
-              src={`${url}${item.poster_path}`}
-              alt={item.title}
-            />
-            <div className="card-body">
-              <h5 className="card-title">{item.title}</h5>
-              <p className="card-text">
-                <Moment format="DD MMMM YYYY">{item.release_date}</Moment>
-              </p>
-            </div>
-          </Link>
-        ))}
+    <div className="app-result">
+      <div className="container-title">
+        <h4>{message}</h4>
+      </div>
+      {
+        result.length === 0 && 
+        <div className="notFound">
+          <p>Résultat introuvable</p>
+          <ul>
+            <li>Vérifier l'orthographe de votre recherche</li>
+            <li>Essayez un autre mot</li>
+            <li>Ou mettez une lettre en générale</li>
+          </ul>
+        </div>
+      }
+      <div className="container-fluid body-block">
+          <main className="page-content">
+            {result.map((item) => (
+              <div 
+                key={item.id}
+                onClick={(e) => {
+                  e.preventDefault();
+                  history.push(`/details/${item.id}`);
+                }}
+                className="card" 
+                style={{"--poster": `url(${url}${item.poster_path})`}}>
+                <div className="content">
+                    <h2 className="title">{item.title} <span><Moment format="DD MMMM YYYY">{item.release_date}</Moment></span></h2>
+                    <p className="copy">{item.overview}</p>
+                </div>
+              </div>
+            ))}
+          </main>
       </div>
       {getNumberPage()}
     </div>

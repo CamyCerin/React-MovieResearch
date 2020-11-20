@@ -1,5 +1,6 @@
 import { withRouter, Link } from "react-router-dom";
-import logoico from "../../../assets/logo.svg";
+import logoico from "../../../assets/logo.png";
+import logoico2 from "../../../assets/logo-2.png";
 
 function Header(props) {
   const { history, isDetailsPage } = props;
@@ -20,71 +21,113 @@ function Header(props) {
   }
 
   return (
-    // <div className="App">
-
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        {/* go home */}
-        <Link
-          to={"/results?homepage"}
-          onClick={(e) => handleLink(e, "/results?homepage")}
-          Prevent
-        >
-          <img src={logoico} alt="moon logo icone"></img>
-        </Link>
-        {/* search bar */}
-        <form class="form-inline">
-          <input
-            class="form-control loupe_img"
-            type="search"
-            placeholder="Rechercher un film"
-            aria-label="Search"
-          ></input>
-        </form>
-        {/* menu */}
-        <ul class="navbar-nav mt-2 mt-lg-0">
-          <li class="nav-item">
-            <Link
+    <header id="header" className="header">
+      {
+        isDetailsPage &&
+        <nav id="nav-bar" className="result"> 
+          <Link
+              className="mobile"
               to={"/results?categories=popular"}
               onClick={(e) => handleLink(e, "/results?categories=popular")}
-              Prevent
             >
-              Populaires
+                <em class="fas fa-arrow-left"></em>
             </Link>
-            <div className="grips">|</div>
 
-            <Link
-              to={"/results?categories=top_rated"}
-              onClick={(e) => handleLink(e, "/results?categories=top_rated")}
-              Prevent
+          <Link
+              to={"/"}
+              onClick={(e) => handleLink(e, "/")}
             >
-              Les mieux notés
+              <img className="header-img" id="header-img" src={logoico2} alt="logo" />
             </Link>
-            <div className="grips">|</div>
-            <Link
-              to={"/results?categories=upcoming"}
-              onClick={(e) => handleLink(e, "/results?categories=upcoming")}
-              Prevent
-            >
-              À venir
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+            
+            <div className="menu">
+                <ul className="menu-link">
+                    <li>
+                      <Link
+                          className="nav-link"
+                          to={"/results?categories=popular"}
+                          onClick={(e) => handleLink(e, "/results?categories=popular")}
+                        >
+                          Populaires
+                        </Link>
+                    </li>
+                    <li>
+                      <Link
+                          className="nav-link NO"
+                          to={"/results?categories=top_rated"}
+                          onClick={(e) => handleLink(e, "/results?categories=top_rated")}
+                        >
+                          Les mieux notés
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                          className="nav-link no"
+                          to={"/results?categories=upcoming"}
+                          onClick={(e) => handleLink(e, "/results?categories=upcoming")}
+                        >
+                          à venir
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            
+        </nav>
+      }
 
-    /* </div> */
+      {
+        !isDetailsPage && 
+        <nav id="nav-bar"> 
+          <Link
+              to={"/"}
+              onClick={(e) => handleLink(e, "/")}
+            >
+              <img className="header-img" id="header-img" src={logoico} alt="logo" />
+            </Link>
+            <input className="menu-btn" type="checkbox" id="menu-btn" />
+            <label className="menu-icon" htmlFor="menu-btn"><span className="nav-icon"></span></label>
+            
+            <div className="menu">
+                <form action="" className="form desktop" onSubmit={getResults}>
+                    <div className="search">
+                        <em className="fas fa-search"></em>
+                    </div>
+                    <input type="search" className="form-control" placeholder="rechercher un film" />
+                </form>
+                <ul className="menu-link">
+                    <li>
+                      <Link
+                          className="nav-link"
+                          to={"/results?categories=popular"}
+                          onClick={(e) => handleLink(e, "/results?categories=popular")}
+                        >
+                          Populaires
+                        </Link>
+                    </li>
+                    <li>
+                      <Link
+                          className="nav-link NO"
+                          to={"/results?categories=top_rated"}
+                          onClick={(e) => handleLink(e, "/results?categories=top_rated")}
+                        >
+                          Les mieux notés
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                          className="nav-link no"
+                          to={"/results?categories=upcoming"}
+                          onClick={(e) => handleLink(e, "/results?categories=upcoming")}
+                        >
+                          à venir
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            
+        </nav>
+      }
+  </header>
   );
 }
 

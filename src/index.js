@@ -2,12 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./Components/App/App";
 import reportWebVitals from "./reportWebVitals";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/style.css";
 import "moment/locale/fr";
-import "./Components/Pages/Details/Details.scss";
-import "./Reset/Reset.scss";
-import "./Components/Layout/Header/Header.scss";
-import "./Components/Layout/Footer/Footer.scss";
 ReactDOM.render(
   <React.StrictMode>
     <App />

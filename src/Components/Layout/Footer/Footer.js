@@ -1,46 +1,67 @@
-import facebookico from "../../../assets/facebook.svg";
-import instagramico from "../../../assets/instagram.svg";
-import twitterico from "../../../assets/twitter.svg";
-import logoico from "../../../assets/logo.svg";
+import logoico from "../../../assets/logo.png";
+import { withRouter, Link } from "react-router-dom";
 
-function Footer() {
+function Footer(props) {
+  const { history } = props;
+
+  function handleLink(e, link) {
+    e.preventDefault();
+    history.push(link);
+  }
+
   return (
-    <div className="App">
-      <div class="footer">
-        <div class="container">
-          <div class="logo_footer">
-            <img src={logoico} alt="logo"></img>
+    <footer>
+      <div className="top-footer">
+          <div className="logo-footer">
+              <img src={logoico} alt="" />
           </div>
-          <div class="links">
-            <p>HOME</p>
-            <p>CONTACT</p>
-            <p>FILMS</p>
-          </div>
+          <div className="menu-footer">
+          <Link
+              to={"/"}
+              onClick={(e) => handleLink(e, "/")}
+            >
+              Home
+            </Link>
 
-          <div class="contact">
-            <img class="img_social" src={facebookico} alt="facebook icon"></img>
-            <img
-              class="img_social"
-              src={instagramico}
-              alt="instagram icon"
-            ></img>
-            <img class="img_social" src={twitterico} alt="twitter icon"></img>
+            <Link
+              to={"/"}
+              onClick={(e) => handleLink(e, "/")}
+            >
+              Contact
+            </Link>
+            <Link
+              to={"/r"}
+              onClick={(e) => handleLink(e, "/results?categories=popular")}
+            >
+              Films
+            </Link>
           </div>
-        </div>
-        <div class="links_mobile">
-          <p>HOME</p>
-          <p>CONTACT</p>
-          <p>FILMS</p>
-        </div>
-        <div class="text_footer">
-          <p>
-            Designed with 💛<br></br>
-            by Camille, Imene, Nastia and Oliwia
-          </p>
-        </div>
+          <div className="social-link">
+          <Link
+              to={"/r"}
+              onClick={(e) => handleLink(e, "/results?categories=popular")}
+            >
+              <em className="fab fa-facebook-square"></em>
+            </Link>
+              <Link
+              to={"/r"}
+              onClick={(e) => handleLink(e, "/results?categories=popular")}
+            >
+              <em className="fab fa-instagram"></em>
+            </Link>
+            <Link
+              to={"/r"}
+              onClick={(e) => handleLink(e, "/results?categories=popular")}
+            >
+              <em className="fab fa-twitter"></em>
+            </Link>
+          </div> 
       </div>
-    </div>
+      <div className="copyright">
+          Designed with 💛 by
+          <p>Camille, Imene, Nastia and Oliwia.</p>
+      </div>
+  </footer>
   );
 }
-
-export default Footer;
+export default withRouter(Footer);
